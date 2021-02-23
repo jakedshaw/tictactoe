@@ -139,7 +139,7 @@ class Game:
                 quit()
 
     def score_adder(self, tile, p1, ai):
-        """adds score & determines to continue or end"""
+        """adds score"""
         if tile == 'X':
             p1.score += 1
             self.last_game = 'Won!'
@@ -152,6 +152,7 @@ class Game:
         self.number -= 1
 
     def round_end_screen(self, board, p1, ai):
+        """prints end of round information"""
         if self.number == 0:
             if p1.score > ai.score:
                 print(f'Round {self.last_game} {p1.score}:{ai.score}\n{board}\n\nYou Won! ', end='')
