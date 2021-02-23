@@ -3,6 +3,11 @@ from os import system
 import numpy as np
 
 
+def clear():
+    """clears terminal"""
+    _ = system('clear')
+
+
 class Game:
     """Game Class"""
 
@@ -11,6 +16,7 @@ class Game:
         self.number = number
         self.next_cell = 'error'
         self.next_player = choice([0, 1])
+        self.last_game = 'error'
 
     def __str__(self):
         """prints how many games left"""
@@ -132,32 +138,28 @@ class Game:
                 print('error 2')
                 quit()
 
-    def score_adder(self, tile, board, p1, ai):
+    def score_adder(self, tile, p1, ai):
         """adds score & determines to continue or end"""
         if tile == 'X':
             p1.score += 1
-            a = 'Won!'
+            self.last_game = 'Won!'
         elif tile == 'O':
             ai.score += 1
-            a = 'Lost.'
+            self.last_game = 'Lost.'
         else:
-            a = 'Tied'
+            self.last_game = 'Tied'
         clear()
         self.number -= 1
+
+    def round_end_screen(self, board, p1, ai):
         if self.number == 0:
             if p1.score > ai.score:
-                print(f'You Won! {p1.score}:{ai.score}')
+                print(f'Round {self.last_game} {p1.score}:{ai.score}\n{board}\n\nYou Won! ', end='')
             elif ai.score > p1.score:
-                print(f'Better luck next time. {p1.score}:{ai.score}')
+                print(f'Round {self.last_game} {p1.score}:{ai.score}\n{board}\n\nYou lost. ', end='')
             else:
-                print(f"It's a draw. {p1.score}:{ai.score}")
+                print(f"Round {self.last_game} {p1.score}:{ai.score}\n{board}\n\nIt's a draw. ", end='')
         elif self.number == 1:
-            print(f'Round {a} 1 game left!')
+            print(f'Round {self.last_game} {p1.score}:{ai.score}\n{board}\n\n1 game left! ', end='')
         else:
-            print(f'Round {a} {p1.score}:{ai.score}\n\n{self.number} games left!')
-        print('\n', board, '\n')
-
-
-def clear():
-    """clears terminal"""
-    _ = system('clear')
+            print(f'Round {self.last_game} {p1.score}:{ai.score}\n{board}\n\n{self.number} games left! ', end='')

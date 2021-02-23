@@ -1,7 +1,7 @@
+from os import system
 import player as p
 import board as b
 import game as g
-from os import system
 
 
 def clear():
@@ -27,14 +27,17 @@ def welcome_message():
 
 def continue_game():
     """main menu"""
-    print(f"Press ENTER to Continue ", end='')
+    game.round_end_screen(board, p1, ai)
+    print(f"Press ENTER to continue ", end='')
     i = input()
     if i == 'q':
         clear()
         quit()
     elif i == '':
         clear()
+        board.reset_data()
     else:
+        clear()
         continue_game()
 
 
@@ -96,11 +99,10 @@ def run_game():
                         game.ai_turn(board, p1, ai)
                         player = ai
     if board.check_full() and not board.check_win(player):
-        game.score_adder(' ', board, p1, ai)
-        board.reset_data()
+        tile = ' '
     else:
-        game.score_adder(player.tile, board, p1, ai)
-        board.reset_data()
+        tile = player.tile
+    game.score_adder(tile, p1, ai)
 
 
 if __name__ == '__main__':
@@ -110,5 +112,4 @@ if __name__ == '__main__':
         game, board, p1, ai = initialize()
         while game.number >= 1:
             run_game()
-            if game.number >= 1:
-                continue_game()
+            continue_game()

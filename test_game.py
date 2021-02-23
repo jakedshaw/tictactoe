@@ -35,7 +35,7 @@ def test_ai_intelligence_win():
 def test_score_adder():
     """tests score is added correctly"""
     p1, ai = p.Player('Ron', 'X', 0), p.Player('Joe', 'O', 3)
-    tile, board = 'O', b.Board()
+    tile = 'O'
     game = g.Game(4)
-    game.score_adder(tile, board, p1, ai)
+    game.score_adder(tile, p1, ai)
     assert ai.score == 4
